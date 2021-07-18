@@ -21,19 +21,19 @@ migrate 会读取 `migrations/*.sql` 进行迁移
 up_migrate=all go run main.go
 ```
 
-启动并执行回滚，1 次, 回滚会自动退出
+执行回滚，1 次, down_migrate 结束会自动退出
 
 ```bash
 down_migrate=1 go run main.go
 ```
 
-跳过 2 次
+执行跳过，2 次, skip_migrate 结束会自动退出
 
 ```bash
 skip_migrate=2 go run main.go
 ```
 
-## 使用其他 migrations 路径
+使用其他 migrations 路径
 
 ```bash
 up_migrate=all dir_migrate=sql/migrations go run main.go

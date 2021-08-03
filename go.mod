@@ -1,4 +1,4 @@
-module github.com/herosql/env_migrate
+module github.com/ymzuiku/env_migrate
 
 go 1.16
 

@@ -7,7 +7,7 @@ Use `github.com/rubenv/sql-migrate` and env, auto run migrate.
 ```go
 
 func main(){
-  env_migrate.Auto(db) // db is database/sql *sql.DB
+  env_migrate.Auto(db,dbName) // db is database/sql *sql.DB, dbName is dataBaseName manby 'mysql'
 }
 ```
 

@@ -30,27 +30,27 @@ func loadMigrationsDir() *migrate.FileMigrationSource {
 	return migrations
 }
 
-func UpMigration(db *sql.DB, max int) {
+func UpMigration(db *sql.DB, max int, dbName string) {
 	dir := loadMigrationsDir()
-	n, err := migrate.ExecMax(db, "postgres", dir, migrate.Up, 9999)
+	n, err := migrate.ExecMax(db, dbName, dir, migrate.Up, 9999)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	fmt.Printf("UpMigration Applied %d migrations!\n", n)
 }
 
-func DownMigration(db *sql.DB, max int) {
+func DownMigration(db *sql.DB, max int, dbName string) {
 	dir := loadMigrationsDir()
-	n, err := migrate.ExecMax(db, "postgres", dir, migrate.Down, 9999)
+	n, err := migrate.ExecMax(db, dbName, dir, migrate.Down, 9999)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	fmt.Printf("DownMigration Applied %d migrations!\n", n)
 }
 
-func SkipMigration(db *sql.DB, max int) {
+func SkipMigration(db *sql.DB, max int, dbName string) {
 	dir := loadMigrationsDir()
-	n, err := migrate.SkipMax(db, "postgres", dir, migrate.Up, 9999)
+	n, err := migrate.SkipMax(db, dbName, dir, migrate.Up, 9999)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -69,7 +69,7 @@ func getEnvKeyValue(keys ...string) (key string, value string) {
 	return
 }
 
-func Auto(db *sql.DB) {
+func Auto(db *sql.DB, dbName string) {
 
 	var max int
 	var onlyMigrate = false
@@ -96,11 +96,11 @@ func Auto(db *sql.DB) {
 	}
 
 	if key == _UP_MIGRATE {
-		UpMigration(db, max)
+		UpMigration(db, max, dbName)
 	} else if key == _DOWN_MIGRATE {
-		DownMigration(db, max)
+		DownMigration(db, max, dbName)
 	} else if key == _SKIP_MIGRATE {
-		SkipMigration(db, max)
+		SkipMigration(db, max, dbName)
 	}
 	// fmt.Printf("Run %v=%v, Done!\n", key, value)
 	if onlyMigrate || key != _UP_MIGRATE {
